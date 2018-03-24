@@ -1,0 +1,81 @@
+<!--
+Name: Pavan Samra
+Student ID: A00891410
+-->
+<html>
+<head>
+    <script>
+        window.onload = function () {
+            var today = new Date();
+            var christmas = new Date(2018, 11, 25);
+
+            var daysUntilXmas = ((christmas - today) / (1000 * 60 * 60 * 24));
+
+            alert(daysUntilXmas.toFixed(0) + " days until Christmas!");
+
+            var nhlTeams = [
+                "Anaheim Ducks",
+                "Arizona Coyotes",
+                "Boston Bruins",
+                "Buffalo Sabres",
+                "Calgary Flames",
+                "Carolina Hurricanes",
+                "Chicago Blackhawks",
+                "Colorado Avalanche",
+                "Columbus Blue Jackets",
+                "Dallas Stars",
+                "Detroit Red Wings",
+                "Edmonton Oilers",
+                "Florida Panthers",
+                "Los Angeles Kings",
+                "Minnesota Wild",
+                "Montreal Canadiens",
+                "Nashville Predators",
+                "New Jersey Devils",
+                "New York Islanders",
+                "New York Rangers",
+                "Ottawa Senators",
+                "Philadelphia Flyers",
+                "Pittsburgh Penguins",
+                "San Jose Sharks",
+                "St. Louis Blues",
+                "Tampa Bay Lighting",
+                "Toronto Maple Leafs",
+                "Vancouver Canucks",
+                "Vegas Golden Knights",
+                "Washington Capitals",
+                "Winnipeg Jets"
+            ];
+
+            for (var i = 0; i < nhlTeams.length; i++) {
+                if (nhlTeams[i].indexOf("an") > -1) {
+                    alert(nhlTeams[i]);
+                }
+            }
+
+            var images1 = document.images;
+
+            for (var i = 0; i < images1.length; i++) {
+                images1[i].style.border = "red solid";
+            }
+
+            var images2 = document.getElementsByTagName("img");
+            for (var i = 0; i < images2.length; i++) {
+                images2[i].width = 100;
+            }
+
+        }
+    </script>
+
+</head>
+<body>
+<noscript>
+    <p>
+        "Please Enable Javascript"
+    </p>
+</noscript>
+<img id="dog" src=dog.jpg>
+<img id="cat" src=cat.jpg>
+<img id="bird" src=bird.jpg>
+</body>
+</html>
