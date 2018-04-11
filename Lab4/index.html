@@ -1,0 +1,137 @@
+<!--
+Name: Pavan Samra
+Student ID: A00891410
+-->
+<html>
+<head>
+    <title>Lab 4</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen"/>
+    <link rel="alternate stylesheet" href="css/style2.css" type="text/css" media="screen"/>
+    <link rel="alternate stylesheet" href="css/style3.css" type="text/css" media="screen"/>
+    <style type="text/css" media="all">
+        @import "css/global.css";
+    </style>
+
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/jtip.js" type="text/javascript"></script>
+    <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+    <script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="js/jquery.corner.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        $(function() {
+            $("#date")
+                .datepicker({ nextText: "", prevText: "", changeMonth: true, changeYear: true })
+                .mask("99/99/9999");
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#nav li a").click(function() {
+                $("link").attr("href",$(this).attr('rel'));
+                return false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('#accordion > li').hover(
+                function () {
+                    var $this = $(this);
+                    $this.stop().animate({'width':'480px'},500);
+                    $('.heading',$this).stop(true,true).fadeOut();
+                    $('.bgDescription',$this).stop(true,true).slideDown(500);
+                    $('.description',$this).stop(true,true).fadeIn();
+                },
+                function () {
+                    var $this = $(this);
+                    $this.stop().animate({'width':'115px'},1000);
+                    $('.heading',$this).stop(true,true).fadeIn();
+                    $('.description',$this).stop(true,true).fadeOut(500);
+                    $('.bgDescription',$this).stop(true,true).slideUp(700);
+                }
+            );
+            $('#defaultPopup,#defaultInline').datepick();
+        });
+    </script>
+
+    <script>
+        $(function() {
+            $('.reference').corner('30px');
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $.mask.definitions['~'] = "[+-]";
+            $("#date").mask("99/99/9999",{placeholder:"mm/dd/yyyy",completed:function(){alert("completed!");}});
+
+            $("input").blur(function() {
+                $("#info").html("Unmasked value: " + $(this).mask());
+            }).dblclick(function() {
+                $(this).unmask();
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+<div id="content">
+    <div class="reference" id="reference" onload="corner()">
+        <ul id="nav">
+            <li><a href="#" rel="css/style.css">Henrik</a></li>
+            <li><a href="#" rel="css/style2.css">Daniel</a></li>
+            <li><a href="#" rel="css/style3.css">The Sedins</a></li>
+        </ul>
+        <p>Date & Masked Input:<input id="date" type="text" tabindex="1" /></p>
+        <span class="formInfo"><a href="ajax.htm?width=375" class="jTip" id="one" name="Password must follow these rules:">?</a></span>
+    </div>
+
+
+    <ul class="accordion" id="accordion">
+        <li class="bg1">
+            <div class="heading">The Twins</div>
+            <div class="bgDescription"></div>
+            <div class="description">
+                <h2>The Twins</h2>
+            </div>
+        </li>
+        <li class="bg2">
+            <div class="heading">The Assistant</div>
+            <div class="bgDescription"></div>
+            <div class="description">
+                <h2>The Assistant</h2>
+            </div>
+
+        </li>
+        <li class="bg3">
+            <div class="heading">The Captain</div>
+            <div class="bgDescription"></div>
+            <div class="description">
+                <h2>The Captain</h2>
+            </div>
+
+        </li>
+        <li class="bg4 bleft">
+            <div class="heading">The Team</div>
+            <div class="bgDescription"></div>
+            <div class="description">
+                <h2>The Team</h2>
+            </div>
+
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $("#reference").corner("15px");
+    });
+</script>
+</body>
+</html>

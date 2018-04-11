@@ -1,0 +1,151 @@
+<html>
+<head>
+<style>
+	div{min-height:120px}
+	#div1{background-color:pink}
+	#div2{background-color:cyan}
+	#div3{background-color:silver}
+	img{width:80px}
+	.selected{border:black dotted 3px}
+</style>
+<script>
+
+/*
+	if you click the left arrow key, the selected image must move left
+	
+	if you click a letter 'J' (or whatever) that is the fifth image in its div
+	then press down or up, it tries to become the fifth image of the neighboring div
+	
+	if the neighboring images doesn't have that many images, just put it last in that div
+	
+	if you click the LEFT half of an image it must move left
+	if you click the RIGHT half of an image it must move right
+*/
+
+currentlySelectedImage = 't'
+
+function createDivs(){
+	var mydiv1 = document.createElement('div')
+	mydiv1.id = 'div1'
+	document.body.appendChild(mydiv1)
+	
+	var mydiv2 = document.createElement('div')
+	mydiv2.id = 'div2'
+	document.body.appendChild(mydiv2)	
+	
+	var mydiv3 = document.createElement('div')
+	mydiv3.id = 'div3'
+	document.body.appendChild(mydiv3)	
+}
+
+
+
+
+
+function createImages(){
+	for(let i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++){
+		var letter = String.fromCharCode(i)
+		var myimg = document.createElement('img')
+		myimg.id = letter
+		myimg.src = 'images/letters/' + letter + '.png'
+		
+		myimg.onclick=moveRight
+		
+		document.getElementById('div1').appendChild(myimg)
+	}
+	
+	document.getElementById(currentlySelectedImage).className = 'selected'
+}
+
+
+
+
+
+function moveRight(){
+	// if this is the last (rightmost) image, move to next div
+	if(this.nextSibling == null){
+		if(this.parentNode.nextSibling != null){
+			// the parent div DOES have a next sibling; move the img
+			this.parentNode.nextSibling.appendChild(this)
+		}else{
+			// the parent div has NO next sibling; 
+			// make this img the first img in the first div
+			document.getElementById('div1').insertBefore(
+				this, document.getElementById('div1').firstChild)
+		}
+	}else{
+		// there is another image on the right
+		// move that image before the clicked on
+		this.parentNode.insertBefore(this.nextSibling, this)
+	}
+}
+
+function moveLeft() {
+
+
+}
+
+
+function moveSelectedLetterRight(){
+
+	var that = document.getElementById(currentlySelectedImage)
+	
+	// if this is the last (rightmost) image, move to next div
+	if(that.nextSibling == null){
+		if(that.parentNode.nextSibling != null){
+			// the parent div DOES have a next sibling; move the img
+			that.parentNode.nextSibling.appendChild(that)
+		}else{
+			// the parent div has NO next sibling; 
+			// make this img the first img in the first div
+			document.getElementById('div1').insertBefore(
+				that, document.getElementById('div1').firstChild)
+		}
+	}else{
+		// there is another image on the right
+		// move that image before the clicked on
+		that.parentNode.insertBefore(that.nextSibling, that)
+	}
+}
+
+
+window.onload=function(){
+	createDivs()
+	createImages()
+	
+}
+
+window.onkeydown=moveSelectedImg
+
+
+function moveSelectedImg(e){
+	var keycode = null
+	
+	if(e.which){
+		keycode = e.which
+	}else if(e.event){
+		keycode = e.event
+	}
+	
+	if(keycode >= 65 && keycode <= 90){
+		keycode += 32
+	
+		// a letter was typed
+		document.getElementById(currentlySelectedImage).className = ''
+		currentlySelectedImage = String.fromCharCode(keycode)
+		document.getElementById(currentlySelectedImage).className = 'selected'
+	}
+	
+	if(keycode == 39){
+		//alert('moving right')
+		moveSelectedLetterRight()
+	}
+}
+
+
+
+
+</script>
+</head>
+<body></body>
+</html>
