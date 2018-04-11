@@ -1,0 +1,135 @@
+<!--
+Name: Pavan Samra
+Student ID: A00891410
+-->
+<html>
+<head>
+    <style>img {
+        width: 200px;
+    }</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var timerF = null;
+        var timerG = null;
+        var isBodyClicked = false;
+
+        function click1(picID) {
+            document.getElementById(picID).style.left = parseInt(document.getElementById(picID).style.left) + 1 + 'px';
+        }
+
+        window.ondblclick = function () {
+            if (!isBodyClicked) {
+                divAll = document.createElement('div');
+                divLike = document.createElement('div');
+                divG = document.createElement('div');
+                divH = document.createElement('div');
+                divButton = document.createElement('div');
+
+                var h = document.createElement('h2');
+                divAll.appendChild(h);
+                t = document.createTextNode("All Images");
+                h.appendChild(t);
+                divAll.id = "0";
+                divAll.class = "instructions";
+
+                imgA = document.createElement('img');
+                imgA.src = "images/a.jpg";
+                imgA.id = "a";
+                divAll.appendChild(imgA);
+                imgA.onclick = move;
+
+                imgB = document.createElement('img');
+                imgB.src = "images/b.jpg";
+                imgB.id = "b";
+                divAll.appendChild(imgB);
+                imgB.onclick = move;
+
+                imgC = document.createElement('img');
+                imgC.src = "images/c.jpg";
+                imgC.id = "c";
+                divAll.appendChild(imgC);
+                imgC.onclick = move;
+
+                imgD = document.createElement('img');
+                imgD.src = "images/d.jpg";
+                imgD.id = "d";
+                divAll.appendChild(imgD);
+                imgD.onclick = move;
+
+                imgE = document.createElement('img');
+                imgE.src = "images/e.jpg";
+                imgE.id = "e";
+                divAll.appendChild(imgE);
+                imgE.onclick = move;
+
+                button = document.createElement('input');
+                button.type = "button";
+                button.value = "border";
+                button.onclick = reset;
+                divButton.appendChild(button);
+
+                imgF = document.createElement('img');
+                imgF.src = "images/b.jpg";
+                imgF.id = "f";
+                imgF.style.position = "absolute";
+                imgF.style.left = "12px";
+                divG.appendChild(imgF);
+
+                imgG = document.createElement('img');
+                imgG.src = "images/b.jpg";
+                imgG.id = "g";
+                imgG.style.position = "absolute";
+                imgG.style.left = "12px";
+                imgG.style.top = "600px";
+                divH.appendChild(imgG);
+
+                document.body.appendChild(divAll);
+                document.body.appendChild(divButton);
+                document.body.appendChild(divG);
+                document.body.appendChild(divH);
+
+                document.getElementById("f").ondblclick = function () {
+                    if (timerF == null) {
+                        timerF = setInterval("click1('f')", 10);
+                    } else {
+                        clearInterval(timerF);
+                        timerF = null;
+                    }
+                }
+
+                document.getElementById('g').ondblclick = function () {
+                    if (timerG == null) {
+                        timerG = setInterval("click1('g')", 5);
+                    } else {
+                        clearInterval(timerG);
+                        timerG = null;
+                    }
+                }
+                isBodyClicked = true;
+            }
+        }
+
+        function changeBorder() {
+            x.style.borderStyle = "none";
+        }
+
+        function move() {
+            this.parentNode.insertBefore(this, this.parentNode.childNodes[1]);
+            this.onclick = stop;
+        }
+
+        function stop() {
+        }
+
+        function reset() {
+            $("img").css("border", "1px red solid");
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>
