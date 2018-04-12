@@ -1,5 +1,6 @@
 <html>
 <head>
+
 <style>
 	div{min-height:120px}
 	#div1{background-color:pink}
@@ -8,6 +9,7 @@
 	img{width:80px}
 	.selected{border:black dotted 3px}
 </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
 /*
@@ -43,14 +45,15 @@ function createDivs(){
 
 
 function createImages(){
+
 	for(let i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++){
 		var letter = String.fromCharCode(i)
 		var myimg = document.createElement('img')
 		myimg.id = letter
 		myimg.src = 'images/letters/' + letter + '.png'
 		
-		myimg.onclick=moveRight
-		
+		myimg.onclick=move
+		//myimg.useMap="#myMap"
 		document.getElementById('div1').appendChild(myimg)
 	}
 	
@@ -58,30 +61,56 @@ function createImages(){
 }
 
 
+function move(e){
+    var pWidth = $(this).innerWidth(); //use .outerWidth() if you want borders
+    var pOffset = $(this).offset();
+    var x = e.pageX - pOffset.left;
+    if(pWidth/2 > x){
+        moveLeft(this)
+    }
+
+    else{
+        moveRight(this)
+    }
 
 
+}
 
-function moveRight(){
+
+function moveRight(that){
 	// if this is the last (rightmost) image, move to next div
-	if(this.nextSibling == null){
-		if(this.parentNode.nextSibling != null){
+	if(that.nextSibling == null){
+		if(that.parentNode.nextSibling != null){
 			// the parent div DOES have a next sibling; move the img
-			this.parentNode.nextSibling.appendChild(this)
+			that.parentNode.nextSibling.appendChild(that)
 		}else{
 			// the parent div has NO next sibling; 
 			// make this img the first img in the first div
 			document.getElementById('div1').insertBefore(
-				this, document.getElementById('div1').firstChild)
+				that, document.getElementById('div1').firstChild)
 		}
 	}else{
 		// there is another image on the right
 		// move that image before the clicked on
-		this.parentNode.insertBefore(this.nextSibling, this)
+		that.parentNode.insertBefore(that.nextSibling, that)
 	}
 }
 
-function moveLeft() {
-
+function moveLeft(that) {
+    if(that.previousSibling == null){
+        if(that.parentNode.id != 'div1'){
+            // the parent div DOES have a next sibling; move the img
+            that.parentNode.previousSibling.appendChild(that)
+        }else{
+            // the parent div has NO next sibling;
+            // make that img the first img in the first div
+            document.getElementById('div3').appendChild(that)
+        }
+    }else {
+        // there is another image on the right
+        // move that image before the clicked on
+        that.parentNode.insertBefore(that, that.previousSibling)
+    }
 
 }
 
@@ -107,6 +136,66 @@ function moveSelectedLetterRight(){
 		that.parentNode.insertBefore(that.nextSibling, that)
 	}
 }
+
+function moveSelectedLetterLeft(){
+
+    var that = document.getElementById(currentlySelectedImage)
+
+    // if this is the last (rightmost) image, move to next div
+    if(that.previousSibling == null){
+        if(that.parentNode.id != 'div1'){
+            // the parent div DOES have a next sibling; move the img
+
+            that.parentNode.previousSibling.appendChild(that)
+        }else{
+            // the parent div has NO next sibling;
+            // make this img the first img in the first div
+            document.getElementById('div3').appendChild(that)
+        }
+    }else{
+        // there is another image on the right
+        // move that image before the clicked on
+        that.parentNode.insertBefore(that, that.previousSibling)
+    }
+}
+
+function moveSelectedLetterUpDown(isDown){
+    var that = document.getElementById(currentlySelectedImage)
+
+    var index = 0, temp = that
+    while((temp = temp.previousSibling) != null) {
+        index ++
+    }
+
+    var targetDiv;
+    if(isDown){
+        if(that.parentNode.nextSibling != null){
+            targetDiv = that.parentNode.nextSibling
+
+        } else {
+            targetDiv = document.getElementById('div1')
+        }
+    } else {
+        if(that.parentNode.id != 'div1'){
+            targetDiv = that.parentNode.previousSibling
+
+        } else {
+            targetDiv = document.getElementById('div3')
+        }
+    }
+
+    if(targetDiv.childNodes.length< index) {
+        targetDiv.appendChild(that)
+    } else {
+        temp = targetDiv.firstChild
+        for(let i = 0; i<index; i++) {
+            temp = temp.nextSibling
+        }
+        targetDiv.insertBefore(that, temp)
+    }
+}
+
+
 
 
 window.onload=function(){
@@ -140,6 +229,15 @@ function moveSelectedImg(e){
 		//alert('moving right')
 		moveSelectedLetterRight()
 	}
+
+	else if(keycode ==37){
+
+	    moveSelectedLetterLeft()
+    } else if(keycode == 40){//down key
+        moveSelectedLetterUpDown(true)
+    }else if(keycode == 38){//Up key
+        moveSelectedLetterUpDown(false)
+    }
 }
 
 
