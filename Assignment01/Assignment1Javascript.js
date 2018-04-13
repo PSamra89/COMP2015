@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
 
 
     var changeDivs = document.getElementsByClassName("change")
@@ -7,11 +7,11 @@ window.onload = function() {
         var paras = changeDivs[i].getElementsByTagName('p');
         for (var j = 0; j < paras.length; j++) {
             var onePara = paras[j]
-            onePara.onmouseover = function () {
+            onePara.onmouseenter = function () {
                 this.style.color = 'red'
             }
 
-            onePara.onmouseout = function(){
+            onePara.onmouseleave = function () {
                 this.style.color = 'black'
             }
         }
@@ -19,11 +19,11 @@ window.onload = function() {
 
     var allParas = document.getElementsByTagName('p')
     for (var i = 0; i < allParas.length; i++) {
-        allParas[i].onclick = function() {
-            if(this.style.border != 'dashed black') {
-                this.style.border = 'dashed black'
+        allParas[i].onclick = function () {
+            if (this.style.border != '1px dashed black') {
+                this.style.border = '1px dashed black'
             } else {
-                this.style.border = 'none'
+                this.style.border = ''
             }
 
         }
@@ -33,22 +33,22 @@ window.onload = function() {
     var imgsInTopDiv = topDiv.getElementsByTagName('img')
     for (var i = 0; i < imgsInTopDiv.length; i++) {
         imgsInTopDiv[i].ondblclick = function () {
-            this.style = 'none'
+            this.style.display = 'none'
         }
     }
     var midDiv = document.getElementById('middle')
     var imgsInMidDiv = midDiv.getElementsByTagName('img')
     for (var i = 0; i < imgsInMidDiv.length; i++) {
         imgsInMidDiv[i].ondblclick = function () {
-            this.style = 'none'
+            this.style.display = 'none'
         }
     }
 
     var bottomDiv = document.getElementById('bottom')
     var linksInBottomDiv = bottomDiv.getElementsByTagName('a')
     for (var i = 0; i < linksInBottomDiv.length; i++) {
-        if(linksInBottomDiv[i].href.indexOf('nhl') >= 0){
-            linksInBottomDiv[i].onclick = function(event){
+        if (linksInBottomDiv[i].href.indexOf('nhl') >= 0) {
+            linksInBottomDiv[i].onclick = function (event) {
                 event.preventDefault()
             }
         }
