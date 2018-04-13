@@ -91,16 +91,22 @@ Student ID: A00891410
                 document.getElementById("f").ondblclick = function () {
                     if (timerF == null) {
                         timerF = setInterval("click1('f')", 10);
-                    } else {
-                        clearInterval(timerF);
-                        timerF = null;
+                    }
+                }
+                document.getElementById("f").onclick = function(){
+                    if(timerF != null){
+                            clearInterval(timerF);
+                            timerF = null;
                     }
                 }
 
                 document.getElementById('g').ondblclick = function () {
                     if (timerG == null) {
                         timerG = setInterval("click1('g')", 5);
-                    } else {
+                    }
+                }
+                document.getElementById('g').onclick = function () {
+                    if(timerG != null) {
                         clearInterval(timerG);
                         timerG = null;
                     }
