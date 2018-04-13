@@ -1,248 +1,233 @@
+<!--
+Name: Pavan Samra
+Student ID: A00891410
+-->
 <html>
 <head>
+    <style>
+        div {
+            min-height: 120px
+        }
 
-<style>
-	div{min-height:120px}
-	#div1{background-color:pink}
-	#div2{background-color:cyan}
-	#div3{background-color:silver}
-	img{width:80px}
-	.selected{border:black dotted 3px}
-</style>
+        #div1 {
+            background-color: pink
+        }
+
+        #div2 {
+            background-color: cyan
+        }
+
+        #div3 {
+            background-color: silver
+        }
+
+        img {
+            width: 80px
+        }
+
+        .selected {
+            border: black dotted 3px
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
+    <script>
 
-/*
-	if you click the left arrow key, the selected image must move left
-	
-	if you click a letter 'J' (or whatever) that is the fifth image in its div
-	then press down or up, it tries to become the fifth image of the neighboring div
-	
-	if the neighboring images doesn't have that many images, just put it last in that div
-	
-	if you click the LEFT half of an image it must move left
-	if you click the RIGHT half of an image it must move right
-*/
+        var currentlySelectedImage = 't';
 
-currentlySelectedImage = 't'
+        function createDivs() {
+            var mydiv1 = document.createElement('div');
+            mydiv1.id = 'div1';
+            document.body.appendChild(mydiv1);
 
-function createDivs(){
-	var mydiv1 = document.createElement('div')
-	mydiv1.id = 'div1'
-	document.body.appendChild(mydiv1)
-	
-	var mydiv2 = document.createElement('div')
-	mydiv2.id = 'div2'
-	document.body.appendChild(mydiv2)	
-	
-	var mydiv3 = document.createElement('div')
-	mydiv3.id = 'div3'
-	document.body.appendChild(mydiv3)	
-}
+            var mydiv2 = document.createElement('div');
+            mydiv2.id = 'div2';
+            document.body.appendChild(mydiv2);
 
-
-
-
-
-function createImages(){
-
-	for(let i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++){
-		var letter = String.fromCharCode(i)
-		var myimg = document.createElement('img')
-		myimg.id = letter
-		myimg.src = 'images/letters/' + letter + '.png'
-		
-		myimg.onclick=move
-		document.getElementById('div1').appendChild(myimg)
-	}
-	
-	document.getElementById(currentlySelectedImage).className = 'selected'
-}
-
-
-function move(e){
-    var pWidth = $(this).innerWidth(); //use .outerWidth() if you want borders
-    var pOffset = $(this).offset();
-    var x = e.pageX - pOffset.left;
-    if(pWidth/2 > x){
-        moveLeft(this)
-    }
-
-    else{
-        moveRight(this)
-    }
-
-
-}
-
-
-function moveRight(that){
-	// if this is the last (rightmost) image, move to next div
-	if(that.nextSibling == null){
-		if(that.parentNode.nextSibling != null){
-			// the parent div DOES have a next sibling; move the img
-			that.parentNode.nextSibling.appendChild(that)
-		}else{
-			// the parent div has NO next sibling; 
-			// make this img the first img in the first div
-			document.getElementById('div1').insertBefore(
-				that, document.getElementById('div1').firstChild)
-		}
-	}else{
-		// there is another image on the right
-		// move that image before the clicked on
-		that.parentNode.insertBefore(that.nextSibling, that)
-	}
-}
-
-function moveLeft(that) {
-    if(that.previousSibling == null){
-        if(that.parentNode.id != 'div1'){
-            // the parent div DOES have a next sibling; move the img
-            that.parentNode.previousSibling.appendChild(that)
-        }else{
-            // the parent div has NO next sibling;
-            // make that img the first img in the first div
-            document.getElementById('div3').appendChild(that)
+            var mydiv3 = document.createElement('div');
+            mydiv3.id = 'div3';
+            document.body.appendChild(mydiv3);
         }
-    }else {
-        // there is another image on the right
-        // move that image before the clicked on
-        that.parentNode.insertBefore(that, that.previousSibling)
-    }
 
-}
+        function createImages() {
 
+            for (let i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++) {
+                var letter = String.fromCharCode(i);
+                var myimg = document.createElement('img');
+                myimg.id = letter;
+                myimg.src = 'images/letters/' + letter + '.png';
 
-function moveSelectedLetterRight(){
+                myimg.onclick = move;
+                document.getElementById('div1').appendChild(myimg);
+            }
 
-	var that = document.getElementById(currentlySelectedImage)
-	
-	// if this is the last (rightmost) image, move to next div
-	if(that.nextSibling == null){
-		if(that.parentNode.nextSibling != null){
-			// the parent div DOES have a next sibling; move the img
-			that.parentNode.nextSibling.appendChild(that)
-		}else{
-			// the parent div has NO next sibling; 
-			// make this img the first img in the first div
-			document.getElementById('div1').insertBefore(
-				that, document.getElementById('div1').firstChild)
-		}
-	}else{
-		// there is another image on the right
-		// move that image before the clicked on
-		that.parentNode.insertBefore(that.nextSibling, that)
-	}
-}
-
-function moveSelectedLetterLeft(){
-
-    var that = document.getElementById(currentlySelectedImage)
-
-    // if this is the last (rightmost) image, move to next div
-    if(that.previousSibling == null){
-        if(that.parentNode.id != 'div1'){
-            // the parent div DOES have a next sibling; move the img
-
-            that.parentNode.previousSibling.appendChild(that)
-        }else{
-            // the parent div has NO next sibling;
-            // make this img the first img in the first div
-            document.getElementById('div3').appendChild(that)
+            document.getElementById(currentlySelectedImage).className = 'selected';
         }
-    }else{
-        // there is another image on the right
-        // move that image before the clicked on
-        that.parentNode.insertBefore(that, that.previousSibling)
-    }
-}
 
-function moveSelectedLetterUpDown(isDown){
-    var that = document.getElementById(currentlySelectedImage)
 
-    var index = 0, temp = that
-    while((temp = temp.previousSibling) != null) {
-        index ++
-    }
-
-    var targetDiv;
-    if(isDown){
-        if(that.parentNode.nextSibling != null){
-            targetDiv = that.parentNode.nextSibling
-
-        } else {
-            targetDiv = document.getElementById('div1')
+        function move(e) {
+            //move image either left or right when clicking respective sides.
+            var pWidth = $(this).innerWidth();
+            var pOffset = $(this).offset();
+            var x = e.pageX - pOffset.left;
+            if (pWidth / 2 > x) {
+                moveLeft(this)
+            }
+            else {
+                moveRight(this)
+            }
         }
-    } else {
-        if(that.parentNode.id != 'div1'){
-            targetDiv = that.parentNode.previousSibling
 
-        } else {
-            targetDiv = document.getElementById('div3')
+
+        function moveRight(that) {
+            // if this is the last (rightmost) image, move to next div
+            if (that.nextSibling == null) {
+                if (that.parentNode.nextSibling != null) {
+                    // the parent div DOES have a next sibling; move the img
+                    that.parentNode.nextSibling.appendChild(that)
+                } else {
+                    // the parent div has NO next sibling;
+                    // make this img the first img in the first div
+                    document.getElementById('div1').insertBefore(
+                        that, document.getElementById('div1').firstChild)
+                }
+            } else {
+                // there is another image on the right
+                // move that image before the clicked on
+                that.parentNode.insertBefore(that.nextSibling, that)
+            }
         }
-    }
 
-    if(targetDiv.childNodes.length< index) {
-        targetDiv.appendChild(that)
-    } else {
-        temp = targetDiv.firstChild
-        for(let i = 0; i<index; i++) {
-            temp = temp.nextSibling
+        function moveLeft(that) {
+            // if this is the first (leftmost) image, move to the previous div
+            if (that.previousSibling == null) {
+                if (that.parentNode.id != 'div1') {
+                    that.parentNode.previousSibling.appendChild(that)
+                } else {
+                    document.getElementById('div3').appendChild(that)
+                }
+            } else {
+                that.parentNode.insertBefore(that, that.previousSibling)
+            }
+
         }
-        targetDiv.insertBefore(that, temp)
-    }
-}
 
 
+        function moveSelectedLetterRight() {
+
+            var that = document.getElementById(currentlySelectedImage);
+
+            // if this is the last (rightmost) image, move to next div
+            if (that.nextSibling == null) {
+                if (that.parentNode.nextSibling != null) {
+                    // the parent div DOES have a next sibling; move the img
+                    that.parentNode.nextSibling.appendChild(that)
+                } else {
+                    // the parent div has NO next sibling;
+                    // make this img the first img in the first div
+                    document.getElementById('div1').insertBefore(
+                        that, document.getElementById('div1').firstChild)
+                }
+            } else {
+                // there is another image on the right
+                // move that image before the clicked on
+                that.parentNode.insertBefore(that.nextSibling, that)
+            }
+        }
+
+        function moveSelectedLetterLeft() {
+
+            var that = document.getElementById(currentlySelectedImage);
+
+            if (that.previousSibling == null) {
+                if (that.parentNode.id != 'div1') {
+                    that.parentNode.previousSibling.appendChild(that)
+                } else {
+                    document.getElementById('div3').appendChild(that)
+                }
+            } else {
+                that.parentNode.insertBefore(that, that.previousSibling)
+            }
+        }
+
+        function moveSelectedLetterUpDown(isDown) {
+            var that = document.getElementById(currentlySelectedImage);
+
+            var index = 0, temp = that;
+            while ((temp = temp.previousSibling) != null) {
+                index++
+            }
+            var targetDiv;
+            if (isDown) {
+                if (that.parentNode.nextSibling != null) {
+                    targetDiv = that.parentNode.nextSibling
+
+                } else {
+                    targetDiv = document.getElementById('div1')
+                }
+            } else {
+                if (that.parentNode.id != 'div1') {
+                    targetDiv = that.parentNode.previousSibling
+
+                } else {
+                    targetDiv = document.getElementById('div3')
+                }
+            }
+
+            if (targetDiv.childNodes.length < index) {
+                targetDiv.appendChild(that)
+            } else {
+                temp = targetDiv.firstChild;
+                for (let i = 0; i < index; i++) {
+                    temp = temp.nextSibling
+                }
+                targetDiv.insertBefore(that, temp)
+            }
+        }
 
 
-window.onload=function(){
-	createDivs()
-	createImages()
-	
-}
+        window.onload = function () {
+            createDivs();
+            createImages();
 
-window.onkeydown=moveSelectedImg
+        };
 
-
-function moveSelectedImg(e){
-	var keycode = null
-	
-	if(e.which){
-		keycode = e.which
-	}else if(e.event){
-		keycode = e.event
-	}
-	
-	if(keycode >= 65 && keycode <= 90){
-		keycode += 32
-	
-		// a letter was typed
-		document.getElementById(currentlySelectedImage).className = ''
-		currentlySelectedImage = String.fromCharCode(keycode)
-		document.getElementById(currentlySelectedImage).className = 'selected'
-	}
-	
-	if(keycode == 39){
-		//alert('moving right')
-		moveSelectedLetterRight()
-	}
-
-	else if(keycode ==37){
-
-	    moveSelectedLetterLeft()
-    } else if(keycode == 40){//down key
-        moveSelectedLetterUpDown(true)
-    }else if(keycode == 38){//Up key
-        moveSelectedLetterUpDown(false)
-    }
-}
+        window.onkeydown = moveSelectedImg;
 
 
+        function moveSelectedImg(e) {
+            var keycode = null;
+
+            if (e.which) {
+                keycode = e.which
+            } else if (e.event) {
+                keycode = e.event
+            }
+
+            if (keycode >= 65 && keycode <= 90) {
+                keycode += 32;
+
+                // a letter was typed
+                document.getElementById(currentlySelectedImage).className = '';
+                currentlySelectedImage = String.fromCharCode(keycode);
+                document.getElementById(currentlySelectedImage).className = 'selected'
+            }
+
+            if (keycode == 39) {
+                //alert('moving right')
+                moveSelectedLetterRight()
+            }
+
+            else if (keycode == 37) {
+                moveSelectedLetterLeft()
+            } else if (keycode == 40) {//down key
+                moveSelectedLetterUpDown(true)
+            } else if (keycode == 38) {//Up key
+                moveSelectedLetterUpDown(false)
+            }
+        }
 
 
-</script>
+    </script>
 </head>
 <body></body>
 </html>
